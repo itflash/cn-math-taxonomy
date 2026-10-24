@@ -1,7 +1,8 @@
 /* 诊断结果分享图：canvas 竖图，系统字体，二维码用本地 qrcode-generator 绘制。 */
 (function (global) {
   'use strict';
-  var SHARE_URL = 'https://math.pansgo.com/?from=share';
+  // 分享图底部二维码的地址。部署后可以设 window.CNM_PUBLIC_URL 指定，默认用当前站点。
+  var SHARE_URL = window.CNM_PUBLIC_URL || (location.origin + location.pathname.replace(/diagnose\/.*$/, ''));
   var W = 1080;
   var H = 1920;
   var FONT = '"PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", "Noto Sans CJK SC", "Noto Sans SC", "Source Han Sans SC", sans-serif';

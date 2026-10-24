@@ -30,6 +30,14 @@ localStorage  ──HTTP──▶  FastAPI（server/app）──▶ SQLite
 改造前 `children.js` 直接读写 localStorage；现在同一组函数建在 `CnmSync` 上，所以诊断页 1500 多行的
 `app.js` 一行没改。
 
+## 登录门禁
+
+没登录时访问任何页面都会跳到 `account/index.html`，登录后回到原来的地址（含参数）。
+判断只看本机有没有登录凭证，不问服务器；凭证过期时接口返回 401，`sync.js` 会清掉它，下次访问重新登录。
+
+关掉门禁（回到「不登录也能用、登录后同步」）：把 `assets/sync-config.js` 里的
+`window.CNM_REQUIRE_LOGIN` 改成 `false`。`mobile/build-www.mjs` 生成的 APK 配置里默认是开的。
+
 ## 冲突怎么处理
 
 共用一个账号意味着多台设备会同时写同一批数据。

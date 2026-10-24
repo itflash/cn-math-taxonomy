@@ -69,7 +69,8 @@ for (const f of DATA_FILES) {
 await writeFile(
   join(out, 'assets', 'sync-config.js'),
   '/* 由 mobile/build-www.mjs 生成。APK 里的页面和服务器不同源，必须写完整地址。 */\n' +
-  `window.CNM_API_BASE = ${JSON.stringify(apiBase)};\n`
+  `window.CNM_API_BASE = ${JSON.stringify(apiBase)};\n` +
+  'window.CNM_REQUIRE_LOGIN = true;\n'
 );
 
 await walkHtml(out);

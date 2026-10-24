@@ -8,7 +8,8 @@
 
   // 登录成功后回到来的地方（只接受站内相对路径）
   var back = new URLSearchParams(location.search).get('back');
-  if (back && !/^\.\.?\//.test(back)) back = null;
+  // 只接受站内地址：以 / 开头（不含 //）或以 ./ ../ 开头
+  if (back && !/^(\/(?!\/)|\.\.?\/)/.test(back)) back = null;
 
   function show() {
     var on = S.loggedIn();
