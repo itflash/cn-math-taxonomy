@@ -109,7 +109,7 @@ diagnose/engine.js    核心算法与判题（纯函数，浏览器 / Node 通�
 diagnose/app.js       界面：数据加载、开始页 / 出题页 / 结果页、Cytoscape 路径图、localStorage、导出、打印
 diagnose/style.css    诊断页布局（含 @media print）；配色和导航在 ../assets/site.css
 tests/test_engine.js  Node 测试（无依赖）：node tests/test_engine.js
-screenshots/          诊断流程 01–05，首页 / 图谱 / 窄屏 06–16，全部祖先与长名称 17–20，高中 21–27，选择性必修 28–31，小学英语 32–35，分享图 38–40，初中英语 43–46，高中英语 51–54
+screenshots/          登录页、首页、知识图谱、诊断结果、孩子档案（Android app 上截的）
 data/questions.json   题库（6159 题：数学 3355 + 英语 2804，见 docs/questions.md）
 ```
 
