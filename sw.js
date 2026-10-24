@@ -3,7 +3,7 @@
  * 改了 SHELL 或 DATA 列表、或数据结构变了，就把 VERSION 加一。 */
 'use strict';
 
-var VERSION = 'v3';
+var VERSION = 'v4';
 var CACHE = 'cnm-pwa-' + VERSION;
 var SCOPE = self.registration.scope;
 
@@ -22,6 +22,8 @@ var SHELL = [
   'children/children.css',
   'children/page.js',
   'children/history.js',
+  'account/',
+  'account/page.js',
   'assets/site.css',
   'assets/explore.css',
   'assets/theme-apple.css',
@@ -29,6 +31,10 @@ var SHELL = [
   'assets/stats-config.js',
   'assets/stats.js',
   'assets/children.js',
+  'assets/sync-config.js',
+  'assets/sync.js',
+  'assets/sync-ui.js',
+  'assets/sync.css',
   'assets/pwa.js',
   'assets/pwa.css',
   'assets/vendor/cytoscape.min.js',
@@ -115,6 +121,8 @@ self.addEventListener('fetch', function (event) {
   var url = new URL(req.url);
   if (url.origin !== self.location.origin) return;
   if (url.pathname === '/sw.js') return;
+  // 同步接口永远走网络，不进离线缓存
+  if (url.pathname.indexOf('/api/') === 0) return;
   if (req.mode === 'navigate') {
     event.respondWith(networkFirst(req, true, abs('./')));
     return;

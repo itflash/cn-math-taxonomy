@@ -7,6 +7,7 @@
   var SUBJECTS = [['', '全部'], ['math', '数学'], ['chinese', '语文'], ['english', '英语'], ['physics', '物理']];
   var SUBJECT_NAME = { math: '数学', chinese: '语文', english: '英语', physics: '物理' };
   var topics = null;
+  var fetchedTopics = false;
   var childId = null;
   var subjectSel = '';
 
@@ -222,6 +223,7 @@
     var cur = CC.current();
     childId = (want && CC.get(want) && want) || (cur && cur.id) || (kids[0] && kids[0].id) || null;
     if (!kids.length) { render(); return; }
+    fetchedTopics = true;
     fetch('../data/topics.json').then(function (r) {
       if (!r.ok) throw new Error('HTTP ' + r.status);
       return r.json();
@@ -230,5 +232,10 @@
       rows.forEach(function (t) { topics[t.id] = t; });
     }).catch(function () { topics = null; }).then(render);
   }
+  // 同步拉下来新记录（或别处删了孩子）后重画
+  window.addEventListener('cnm:sync', function (e) {
+    if (!e.detail.changed) return;
+    if (!fetchedTopics && CC.list().length) init(); else render();
+  });
   init();
 })();

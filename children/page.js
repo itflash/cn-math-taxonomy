@@ -1,4 +1,4 @@
-/* 孩子档案页：添加、编辑、删除孩子，切换当前孩子。数据来自 assets/children.js（localStorage）。 */
+/* 孩子档案页：添加、编辑、删除孩子，切换当前孩子。数据来自 assets/children.js，登录后和服务器同步。 */
 (function () {
   'use strict';
   var CC = window.CnmChildren;
@@ -101,7 +101,7 @@
     var del = el('button', 'danger', '删除');
     del.type = 'button';
     del.addEventListener('click', function () {
-      if (!confirm('删除「' + c.name + '」的档案和全部诊断记录？删除后无法恢复。')) return;
+      if (!confirm('删除「' + c.name + '」的档案和全部诊断记录？登录同一账号的其他设备上也会删除。')) return;
       CC.remove(c.id);
       if (editing === c.id) resetForm();
       render();
@@ -138,6 +138,13 @@
     render();
   });
   cancelBtn.addEventListener('click', function () { resetForm(); render(); });
+
+  // 别的设备改了档案、同步下来后重画；正在编辑的孩子被别处删掉就退出编辑
+  window.addEventListener('cnm:sync', function (e) {
+    if (!e.detail.changed) return;
+    if (editing && !CC.get(editing)) resetForm();
+    render();
+  });
 
   resetForm();
   render();
