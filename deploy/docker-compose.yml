@@ -1,0 +1,55 @@
+# 用法见 deploy/README.md。配置写在同目录的 .env（参考 .env.example）。
+name: cnm
+
+services:
+  api:
+    build:
+      context: ../server
+      args:
+        PIP_INDEX_URL: ${PIP_INDEX_URL:-}
+    restart: unless-stopped
+    environment:
+      CNM_DB: /data/cnm.sqlite3
+      CNM_CORS_ORIGINS: ${CORS_ORIGINS:-https://localhost,capacitor://localhost}
+    volumes:
+      - api-data:/data
+
+  web:
+    build:
+      context: ..
+      dockerfile: deploy/web.Dockerfile
+    restart: unless-stopped
+    depends_on: [api]
+    environment:
+      SITE_ADDRESS: ${SITE_ADDRESS:-:80}
+    ports:
+      - "${HTTP_PORT:-80}:80"
+      - "${HTTPS_PORT:-443}:443"
+    volumes:
+      - caddy-data:/data
+      - caddy-config:/config
+
+  # 每天备份一次数据库，保留最近 14 份
+  backup:
+    image: alpine:3.22
+    restart: unless-stopped
+    depends_on: [api]
+    volumes:
+      - api-data:/data:ro
+      - ${BACKUP_DIR:-./backups}:/backups
+    entrypoint: ["/bin/sh", "-c"]
+    command:
+      - |
+        apk add --no-cache sqlite >/dev/null
+        while true; do
+          if [ -f /data/cnm.sqlite3 ]; then
+            sqlite3 /data/cnm.sqlite3 ".backup /backups/cnm-$$(date +%F).sqlite3" && echo "backup ok $$(date)"
+            ls -1t /backups/cnm-*.sqlite3 | tail -n +15 | xargs -r rm -f
+          fi
+          sleep 86400
+        done
+
+volumes:
+  api-data:
+  caddy-data:
+  caddy-config:

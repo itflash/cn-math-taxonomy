@@ -1,0 +1,22 @@
+# SITE_ADDRESS 填域名（如 xuexi.example.com）时 Caddy 自动申请 HTTPS 证书；本机测试用 :80。
+{$SITE_ADDRESS::80} {
+	encode zstd gzip
+
+	handle /api/* {
+		reverse_proxy api:8000
+	}
+
+	handle {
+		root * /srv
+		file_server
+	}
+
+	header {
+		X-Content-Type-Options nosniff
+		Referrer-Policy strict-origin-when-cross-origin
+		X-Frame-Options DENY
+		-Server
+	}
+	# 离线缓存脚本要能及时更新
+	header /sw.js Cache-Control "no-cache"
+}

@@ -1,0 +1,16 @@
+.git
+.github
+node_modules
+server
+scripts
+screenshots
+tests
+docs
+*.md
+data/_qbatches
+data/_second_pass
+data/_distractor_changelog.json
+data/second_pass_log.json
+data/verification_report.json
+data/mappings
+diagnose/README.md

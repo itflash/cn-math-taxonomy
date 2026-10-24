@@ -11,3 +11,10 @@ __pycache__/
 PROMPT*.md
 chain.sh
 .cf-token-workers
+
+# 部署
+deploy/.env
+!deploy/.env.example
+deploy/backups/
+server/.venv/
+server/.pytest_cache/
