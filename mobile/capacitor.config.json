@@ -1,0 +1,13 @@
+{
+  "appId": "com.itflash.xuexi",
+  "appName": "知识图谱诊断",
+  "webDir": "www",
+  "server": {
+    "androidScheme": "https"
+  },
+  "android": {
+    "allowMixedContent": false,
+    "captureInput": true,
+    "webContentsDebuggingEnabled": false
+  }
+}
