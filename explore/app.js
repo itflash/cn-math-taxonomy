@@ -411,14 +411,14 @@
       parts.push(el('div', { class: 'alias-note' },
         '旧编号 ', el('code', { text: currentAlias.id }),
         '（' + (currentAlias.name || '未命名') + '）已对应到这个知识点。用该旧编号开始诊断时，会包含映射中的全部 ' + currentAlias.targets.length + ' 个小学知识点。 ',
-        el('a', { href: '../diagnose/?target=' + encodeURIComponent(currentAlias.id) }, '按旧编号诊断')));
+        el('a', { href: '../diagnose/index.html?target=' + encodeURIComponent(currentAlias.id) }, '按旧编号诊断')));
     }
     parts.push(el('h1', { class: 'detail-title', text: topic.name }));
     parts.push(el('div', { class: 'pills' },
       el('span', { class: 'pill pill-' + (kind === 'primary' ? 'p' : kind === 'junior' ? 'j' : 'h'), text: stageLabel(topic.grade) }),
       el('code', { class: 'id-code', text: topic.id })));
-    var diagHref = '../diagnose/?target=' + encodeURIComponent(topic.id);
-    if (subject !== 'math') diagHref = '../diagnose/?subject=' + subject + '&target=' + encodeURIComponent(topic.id);
+    var diagHref = '../diagnose/index.html?target=' + encodeURIComponent(topic.id);
+    if (subject !== 'math') diagHref = '../diagnose/index.html?subject=' + subject + '&target=' + encodeURIComponent(topic.id);
     parts.push(el('a', {
       class: 'btn btn-primary btn-lg diag-btn',
       href: diagHref
@@ -453,7 +453,7 @@
         el('p', { class: 'muted', text: '物理和数学分开建图，这里只列出会用到的数学，不算先修，诊断时也不会追到数学。' }),
         el('ul', { class: 'plain' }, topic.mathLinks.map(function (link) {
           return el('li', null,
-            el('a', { href: '../explore/#' + encodeURIComponent(link.id) }, mathNames[link.id] || link.id),
+            el('a', { href: '../explore/index.html#' + encodeURIComponent(link.id) }, mathNames[link.id] || link.id),
             el('span', { class: 'muted', text: '：' + link.reason }));
         }))));
     }

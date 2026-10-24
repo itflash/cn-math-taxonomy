@@ -23,7 +23,7 @@
   }
   function exploreHref(id) {
     var sub = subjectOfId(id);
-    return '../explore/' + (sub === 'math' ? '' : '?subject=' + sub) + '#' + encodeURIComponent(id);
+    return '../explore/index.html' + (sub === 'math' ? '' : '?subject=' + sub) + '#' + encodeURIComponent(id);
   }
   function pad(n) { return ('0' + n).slice(-2); }
   function fmt(iso) {
@@ -151,7 +151,7 @@
       recs.forEach(function (r) { sec.appendChild(recordCard(child, r)); });
     }
     var go = el('a', 'btn btn-primary', '去做一次诊断');
-    go.href = '../diagnose/' + (subjectSel === 'english' || subjectSel === 'physics' || subjectSel === 'chinese' ? '?subject=' + subjectSel : '');
+    go.href = '../diagnose/index.html' + (subjectSel === 'english' || subjectSel === 'physics' || subjectSel === 'chinese' ? '?subject=' + subjectSel : '');
     sec.appendChild(go);
     return sec;
   }
@@ -176,7 +176,7 @@
       render();
     });
     var manage = el('a', 'btn', '管理档案');
-    manage.href = './';
+    manage.href = 'index.html';
     picker.appendChild(label);
     picker.appendChild(sel);
     picker.appendChild(manage);
@@ -204,7 +204,7 @@
     if (!kids.length) {
       content.appendChild(el('p', 'kid-empty', '还没有孩子档案。先添加孩子，诊断结果才会按孩子保存。'));
       var add = el('a', 'btn btn-primary', '去添加孩子');
-      add.href = './';
+      add.href = 'index.html';
       content.appendChild(add);
       return;
     }

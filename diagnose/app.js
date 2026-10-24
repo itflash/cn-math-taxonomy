@@ -237,7 +237,7 @@
   /* ------------------------------------------------------------ 孩子档案 */
   const CC = window.CnmChildren;
   function childLabel(c) { return c.name + (c.grade ? '（' + c.grade + '）' : ''); }
-  function childrenHref(path) { return '../children/' + (path || ''); }
+  function childrenHref(path) { return '../children/' + (path || 'index.html'); }
   function fromQuery() { return '?from=diagnose' + (subject !== 'math' ? '&subject=' + subject : ''); }
   function childSelect(onPick) {
     const cur = CC.current();
