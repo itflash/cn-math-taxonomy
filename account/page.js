@@ -15,6 +15,8 @@
     var on = S.loggedIn();
     loginCard.hidden = on;
     accountCard.hidden = !on;
+    // 没登录时藏掉底部标签栏和「返回档案」：点过去也会被门禁弹回登录页
+    document.body.classList.toggle('logged-out', !on);
     if (on) $('a-user').textContent = '账号：' + S.username();
   }
   function showError(msg) { errBox.textContent = msg || ''; errBox.hidden = !msg; }
